@@ -1,23 +1,37 @@
-# 📍 &nbsp; Return Latitude and Longitude Given CEP
+# BOKA
+🌉 Build, 🔎 Observe, 📚 Know, 🚩 Alert!
 
-&nbsp; [![TomTom](https://img.shields.io/badge/API&nbsp;Documentation-TomTom-red)](https://developer.tomtom.com/search-api/search-api-documentation) &nbsp; [![API CEP](https://img.shields.io/badge/API&nbsp;Documentation-API&nbsp;CEP-purple)](https://apicep.com/api-de-consulta/)
+### Return the Landslide risk given CEP or Longitude and Latitude
 
-## Run
+&nbsp; [![TomTom](https://img.shields.io/badge/API&nbsp;Documentation-TomTom-red)](https://developer.tomtom.com/search-api/search-api-documentation) &nbsp; [![API CEP](https://img.shields.io/badge/API&nbsp;Documentation-API&nbsp;CEP-purple)](https://apicep.com/api-de-consulta/) &nbsp; [![NASA](https://img.shields.io/badge/GPM&nbsp;Data&nbsp;Directory-NASA-blue)](https://gpm.nasa.gov/data/visualizations/precip-apps)
 
-Create a `.env` in root folder with the following information:
+![BOKA](images/boka.gif)
 
-```python
-TOMTOM_API_KEY =  #get your key here: https://developer.tomtom.com/how-to-get-tomtom-api-key
+## Run 🏁
+
+1. Clone the repository, running the following command in your chosen folder
+```
+$ git clone git@github.com:romavini/boka.git
+$ cd boka
 ```
 
-Install dependences
+2. (Optional) Create a virtual environment
+```
+$ virtualenv venv
+$ venv\Scripts\activate.bat
+```
+
+3. Create a `.env` in the root folder with the following information:
+```python
+TOMTOM_API_KEY =  # Get your key here: https://developer.tomtom.com/how-to-get-tomtom-api-key
+```
+
+4. Install project dependencies
 ```
 $ pip install -r requirements.txt
 ```
 
-And run the application.
+5. Run the application.
 ```
 $ python apiservce/main.py
 ```
-
-
