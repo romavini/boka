@@ -114,12 +114,33 @@ client.on('message', msg => {
                console.log("Latitude")
                lat = msg['location']['latitude']
                console.log(lat)
-                //msg.reply("DEBUG:::  Você enviou uma localização\n "+lon+";"+lat)
+                let localizacao = '\"'+lon+";"+lat+"\""
+                const execSync = require('child_process').execSync;
+                const output = execSync('python ../api/apiservice/api.py 1 '+localizacao, { encoding: 'utf-8' }); 
+
+                var delayInMilliseconds = 1000;
+                let json = require("../api/apiservice/response/response_dict.json");
+                setTimeout(function() {
+                    console.log(json)
+                    console.log("Indices Localização!!!")
+                    msg.reply("Seus indices:\n☔Preciptação: "+json['precip']+"\n⛰️Risco de Deslizamento: "+json['risk'])
+                }, delayInMilliseconds);
+
                 /* Envia a lon e lat para o python*/
             }else{
                 /* enviar o CEP para o python*/
                 console.log("Enviado CEP")
-                //msg.reply("DEBUG:::  Você enviou um CEP")
+
+                const execSync = require('child_process').execSync;
+                const output = execSync('python ../api/apiservice/api.py 0 '+msg.body, { encoding: 'utf-8' }); 
+                var delayInMilliseconds = 1000;
+                let json = require("../api/apiservice/response/response_dict.json");
+                setTimeout(function() {
+                    console.log(json)
+                    console.log("Indices!!!")
+                    msg.reply("Seus indices:\n☔Preciptação: "+json['precip']+"\n⛰️Risco de Deslizamento: "+json['risk'])
+                }, delayInMilliseconds);
+
             }
             msg.reply(nome+", nos informe sua situação atual:\n1 - Estou em área de risco.\n2 - Não estou em risco, gostaria de ajudar.")
             caminhos = 4;
