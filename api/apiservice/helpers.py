@@ -25,11 +25,11 @@ def read_json(filename: str):
     return data
 
 
-def create_json(data: Dict[Any, Any], filename: str):
+def create_json(data: Dict[Any, Any], filename: str, folder="data_nasa"):
     json_object = json.dumps(data, indent=4)
 
     path_to_enter = os.getcwd().split(os.sep)
-    path_to_enter.extend(["apiservice", "data_nasa"])
+    path_to_enter.extend(["apiservice", folder])
     path_to_enter = f"{os.sep}".join(path_to_enter)  # type: ignore
     os.chdir(path_to_enter)  # type: ignore
 

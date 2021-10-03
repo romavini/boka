@@ -66,6 +66,12 @@ class GeoData:
 
         return greater_nowcast
 
+    def format_long_lat(self, resp):
+        long, lat = resp.split(";")
+        long_lat = (float(long), float(lat))
+
+        return long_lat
+
     def main(self):
         resp = int(input("\nChoose what to insert\n0: CEP\n1: Long;Lat\n2: Address\n>> "))
 
@@ -73,10 +79,9 @@ class GeoData:
             long_lat = self.long_lat_from_cep(input("\n\nInsert the CEP\n>>"))
 
         elif resp == 1:
-            long, lat = input(
-                "\nInsirt long and lat in the following format: 00.00;00.00\n>> "
-            ).split(";")
-            long_lat = (float(long), float(lat))
+            self.format_long_lat(
+                input("\nInsirt long and lat in the following format: 00.00;00.00\n>> ")
+            )
 
         elif resp == 2:
             long_lat = self.long_lat_from_address(input("\nInsert the address\n>>"))
@@ -85,7 +90,7 @@ class GeoData:
 
         print_message("Loading", "Checking Landslide Risk at your area...", "n")
         nowcast = self.get_nowcast(self.data[0], long_lat)
-        precip = self.get_precip(self.data[0], long_lat)
+        precip = self.get_precip(self.data[1], long_lat)
 
         print_final_message(
             "Risk at your area",

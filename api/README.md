@@ -7,15 +7,17 @@
 
 ![BOKA](images/boka.gif)
 
-## Call Functions
+## Call Functions 📞
 
-```python
-geo_data = GeoData()
-
-data = geo_data.load_nasa_data()
-
-[logitude, latitude] = geo_data.long_lat_from_cep
 ```
+$ python apiservice/api.py arg1 arg2
+```
+Where:
+ - `arg1` is `0` to insert CEP or `1` to insert `long;lat`;
+ - `arg2` is the information;
+ - `arg3` (optional) is an filename to response JSON.
+
+A response JSON file will be create in the `api/apiservice/response/` folder.
 
 ## Run 🏁
 
