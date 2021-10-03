@@ -8,6 +8,12 @@ import haversine as hs  # type: ignore
 
 
 def read_json(filename: str):
+    path_to_exit = os.getcwd().split(os.sep)
+    path_to_exit.extend(["..", "/api"])
+    path_to_exit = f"{os.sep}".join(path_to_exit)  # type: ignore
+
+    os.chdir(path_to_exit)  # type: ignore
+
     path_to_enter = os.getcwd().split(os.sep)
     path_to_enter.extend(["apiservice", "data_nasa"])
     path_to_enter = f"{os.sep}".join(path_to_enter)  # type: ignore
