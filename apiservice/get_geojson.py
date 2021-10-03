@@ -28,9 +28,9 @@ def get_days(date_time: str):
     day = int(date_time[6:])
 
     days = date(year, month, day) - date(year, 1, 1)
-    days = days.days + 1
+    days_int = days.days + 1
 
-    return days
+    return days_int
 
 
 def get_geodata(date_time: str):

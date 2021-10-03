@@ -14,7 +14,7 @@ def get_yesterday(cur_date):
     return yesterday
 
 
-def dist_between(coord1, coord2, radius=350000):
+def dist_between(coord1, coord2, radius=20000):
     """"""
     return hs.haversine(coord1, coord2) * 1000 <= radius
 
