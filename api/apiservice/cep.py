@@ -1,5 +1,5 @@
-import requests
-from typing import Any, Dict, Type
+import requests  # type: ignore
+from typing import Any, Dict
 
 pontuations = "-.,;' _"
 bars = ".,\\/\"'"

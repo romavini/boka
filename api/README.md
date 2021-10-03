@@ -7,6 +7,16 @@
 
 ![BOKA](images/boka.gif)
 
+## Call Functions
+
+```python
+geo_data = GeoData()
+
+data = geo_data.load_nasa_data()
+
+[logitude, latitude] = geo_data.long_lat_from_cep
+```
+
 ## Run 🏁
 
 1. Clone the repository, running the following command in your chosen folder

@@ -1,6 +1,59 @@
 import os
-from typing import Any
-from dotenv import load_dotenv
+import json
+from typing import Any, Dict
+from dotenv import load_dotenv  # type: ignore
+from shapely.geometry import Point  # type: ignore
+from shapely.geometry import Polygon  # type: ignore
+import haversine as hs  # type: ignore
+
+
+def read_json(filename: str):
+    path_to_enter = os.getcwd().split(os.sep)
+    path_to_enter.extend(["apiservice", "data_nasa"])
+    path_to_enter = f"{os.sep}".join(path_to_enter)  # type: ignore
+    os.chdir(path_to_enter)  # type: ignore
+
+    with open(f"{filename}.json", "r") as f:
+        data = json.loads(f.read())
+
+    path_to_exit = os.getcwd().split(os.sep)
+    path_to_exit.extend(["..", ".."])
+    path_to_exit = f"{os.sep}".join(path_to_exit)  # type: ignore
+
+    os.chdir(path_to_exit)  # type: ignore
+
+    return data
+
+
+def create_json(data: Dict[Any, Any], filename: str):
+    json_object = json.dumps(data, indent=4)
+
+    path_to_enter = os.getcwd().split(os.sep)
+    path_to_enter.extend(["apiservice", "data_nasa"])
+    path_to_enter = f"{os.sep}".join(path_to_enter)  # type: ignore
+    os.chdir(path_to_enter)  # type: ignore
+
+    with open(f"{filename}.json", "w") as f:
+        f.write(json_object)
+
+    path_to_exit = os.getcwd().split(os.sep)
+    path_to_exit.extend(["..", ".."])
+    path_to_exit = f"{os.sep}".join(path_to_exit)  # type: ignore
+
+    os.chdir(path_to_exit)  # type: ignore
+    print(os.getcwd())
+
+
+def dist_between(coord1, coord2, radius=5000):
+    """"""
+    return hs.haversine(coord1, coord2) * 1000 <= radius
+
+
+def point_in_poygon(coord, poly):
+    point = Point(coord)
+    polygon = Polygon(poly)
+
+    return polygon.contains(point)
 
 
 def get_apikey(key_name: str) -> Any:

@@ -1,2 +1,4 @@
 python-dotenv==0.15.0
 requests==2.25.1
+shapely==1.7.1
+haversine==2.5.1

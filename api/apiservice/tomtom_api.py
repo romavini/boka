@@ -1,4 +1,4 @@
-import requests
+import requests  # type: ignore
 from apiservice.helpers import get_apikey
 
 
