@@ -85,19 +85,21 @@ let lon = ""
 let lat = ""
 let cep = ""
 let subcaminho = ""
+
 client.on('message', msg => {
     //console.log(msg)
     console.log("Usuario>> "+ msg.body)
 
     switch (caminhos){
         case 1:
-            msg.reply("Seja bem vindo(a) a central de auxílio à áreas de risco.\n😉Por favor, informe o seu nome:");
+            //msg.reply("Seja bem vindo(a) a central de auxílio à áreas de risco.\n*Por favor, informe o seu nome:*");
+            msg.reply("Welcome to the help center for risk area.\n* Please, informe your name:*")
             caminhos = 2
             break;
 
         case 2:
             nome = msg.body
-            msg.reply("Ola "+nome+"\nForneça a sua localização do Whatsapp ou CEP para proseguir:");
+            msg.reply("Hi, "+nome+"!\n*Provide your Whastapp location or ZIP code to proceed.*");
             caminhos = 3 
         break;
         case 3:
@@ -123,7 +125,17 @@ client.on('message', msg => {
                 setTimeout(function() {
                     console.log(json)
                     console.log("Indices Localização!!!")
-                    msg.reply("Seus indices:\n☔Preciptação: "+json['precip']+"\n⛰️Risco de Deslizamento: "+json['risk'])
+                    risco = ""
+                    if (json['risk'] == "0"){
+                        risco = "✅ Low"
+                    }else if(json['risk'] == "1"){
+                        risco = "⚠️ Moderate"
+
+                    }else if(json['risk'] == "2"){
+                        risco = "⛔ High"
+
+                    }
+                    msg.reply("*-------Your rates------*\n⛰️Landslides Risk: *"+risco+"*\n🌧️ Preciptation: *"+json['precip']+" mm* ")
                 }, delayInMilliseconds);
 
                 /* Envia a lon e lat para o python*/
@@ -138,73 +150,88 @@ client.on('message', msg => {
                 setTimeout(function() {
                     console.log(json)
                     console.log("Indices!!!")
-                    msg.reply("Seus indices:\n☔Preciptação: "+json['precip']+"\n⛰️Risco de Deslizamento: "+json['risk'])
+                    risco = ""
+                    if (json['risk'] == "0"){
+                        risco = "✅Low"
+                    }else if(json['risk'] == "1"){
+                        risco = "⚠️ Moderate"
+
+                    }else if(json['risk'] == "2"){
+                        risco = "⛔ High"
+
+                    }
+                    msg.reply("*-------Your rates------*\n⛰️Landslides Risk: *"+risco+"*\n🌧️ Preciptation: *"+json['precip']+" mm* ")
                 }, delayInMilliseconds);
 
             }
-            msg.reply(nome+", nos informe sua situação atual:\n1 - Estou em área de risco.\n2 - Não estou em risco, gostaria de ajudar.")
+            msg.reply("*"+nome+", inform your current situation:*\n1 - I'm at a risk area.\n2 - I'm not at risk, I'd like to help.")
             caminhos = 4;
         break;
         case 4:
             if (msg.body == "1"){
-                msg.reply("Está em situação de emergência neste momento?\n1- Sim, preciso de ajuda agora\n2 - Não, mas gostaria de enviar foto e/ou video do local.")
+                msg.reply("*Are you in an emergency situation right now?*\n1- Yes, I need help right now.\n2 - No, but i'd like to submit photo and/or video of the location.")
                 caminhos = 5;
             }else if (msg.body == "2"){
-                msg.reply("Quais tipos de ajuda você pode oferecer?\n1 - Alimentos\n2 - Abrigo\n3 - Agua\n4 - Material de construção\n5 - Outros")
+                msg.reply("*What kind of help could you offer?*\n1 - Food\n2 - Shelter\n3 - Water\n4 - Construction material\n5 - Others")
                 caminhos = 9;
             }
         break;
         case 5:
             if (msg.body == "1"){
-                msg.reply("Telefones de emergência:\n 199 - Defesa Civil\n 193 - Corpo de Bombeiros\n 190 - Policia Militar\n (XX) XXXX-XXXXX - Prefeitura\n ")
-                msg.reply("Mantenha a calma, se possivel, deixe o local imediatamente e vá para um local seguro pois novos deslizamentos podem acontecer a qualquer momento.\n Você precisa de alguma ajuda adicional?")
-                msg.reply("1 - Preciso de um local para ficar.\n2 - Preciso de material para arrumar minha casa.\n3 - Preciso de alimento ou água.\n4 - Preciso de outro tipo de ajuda")
+                msg.reply("Emergency numbers :\n 199 - Civil Defense\n 193 - Fire Department\n 190 - Military Police\n (XX) XXXX-XXXXX - City Hall\n ")
+                msg.reply("*Keep calm, if possible, leave the area immediately and move to a safe place because new landslides may happen at any time.\n*Do you need, any additional help?*\n1 - I need a shelter.\n2 - I need construction material to fix my house.\n3 - I need food or water.\n4 - I neeed another kind of help.")
                 caminhos = 6;
             }
             else if(msg.body == "2"){
-                msg.reply("Autoriza que esses dados sejam enviados para a defesa civil para a abertura de protocolo sobre sua situação?\n1 - Sim\n2 - Não")
+                msg.reply("*Do you authorize this data to be sent to the civil defense for the opening of a protocol about your situation?*\n1 - Yes\n2 - No")
             caminhos = 7;
             }
         break;
         case 6:
             switch(msg.body){
             case "1":
-                    msg.reply("Dirija se a XXXX no Endereço XXXX")
-                    msg.reply("Obrigado por entrar em contato!")
+                    msg.reply("Go to <PLACE>, at <ADDRESS>")
+                    msg.reply("*Thanks you for contact us.*")
             break;
             case "2":
-                    msg.reply("Dirija-se ao galpão da prefeitura no endereço XXXX")
-                    msg.reply("Obrigado por entrar em contato!")
+                    msg.reply("Go to <PLACE>, at <ADDRESS>")
+                    msg.reply("*Thanks you for contact us.*")
+            break;
             break;
              case "3":
-                    msg.reply("Dirija-se ao centro de distribuição no endereço XXX")
-                    msg.reply("Obrigado por entrar em contato!")
+
+                    msg.reply("Go to <PLACE>, at <ADDRESS>")
+                    msg.reply("*Thanks you for contact us.*")
+            break;
             break;
             case "4":
-                    msg.reply("Escreva do que está precisando e assim que possivel retornaremos")
+
+                    msg.reply("Go to <PLACE>, at <ADDRESS>")
+                    msg.reply("*Thanks you for contact us.*")
+            break;
             break;
             }
             caminhos = 0
         break;
         case 7:
             if(msg.body == "1"){
-                msg.reply("Adicine as fotos e/ou Videos!")
+                msg.reply("Attach your photos and/or videos.")
             }
-            msg.reply("Gostaria de receber dicas para minimizar o problema de deslizamento?\n1 - Sim\n2 - Não" )
+            msg.reply("*Would you like to receive tips to minimize the landslide risk*\n1 - Yes\n2 - No" )
             caminhos = 8;
         break;
         case 8:
             if(msg.body == "1"){
-                msg.reply("Voce foi cadastrado para receber as dicas.")
+                msg.reply("You have been registered to receive the tips.")
             }
             caminhos = 0
-            msg.reply("Obrigado por entrar em contato!")
+            msg.reply("*Thanks you for contact us.*")
         break;
         case 9:
-            msg.reply("Agradecemos a sua disponibilidade. Entraremos em contato quando houver a necessidade.")
+            msg.reply("We appreciate your availability.\nWe will contact you when the need arises.")
         break;
         default:
-            msg.reply("Obrigado por entrar em contato!")
+            msg.reply("*Thanks you for contact us.*")
     }
 
   if (msg.body == '!ping') {
